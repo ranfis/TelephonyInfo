@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Información  de Telefonía </string>
+    <string name="action_settings">Ajustes</string>
+
+    <string name="sim_serial">SIM Serial Number</string>
+    <string name="sim_operator">Operador de SIM</string>
+    <string name="sim_imsi">IMSI</string>
+    <string name="sim_imsi_mcc">MCC</string>
+    <string name="sim_imsi_mnc">MNC</string>
+    <string name="network_operator">Operador de Red</string>
+    <string name="network_type">Tipo de Red</string>
+    <string name="msisdn">MSISDN</string>
+
+
+    <string name="develper">Desarrollado por Ramfis M. Sanchez (13-1054)</string>
+    <string name="error">Error al leer informacion de telefonia.</string>
+</resources>
