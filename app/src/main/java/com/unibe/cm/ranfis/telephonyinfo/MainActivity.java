@@ -14,9 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v(LOG_TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -35,79 +37,34 @@ public class MainActivity extends AppCompatActivity {
             TelephonyManager tMgr = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
 
             String mNetworkOperatorName = tMgr.getSimOperatorName();
+            Log.v(LOG_TAG, "mNetworkOperatorName="+mNetworkOperatorName);
 
             String mSimSerialNumber = tMgr.getSimSerialNumber();//
             ((TextView) findViewById(R.id.tSimSerialNumber)).setText(mSimSerialNumber);
+            Log.v(LOG_TAG, "mSimSerialNumber=" + mSimSerialNumber);
 
             String mSimOperator = tMgr.getSimOperator();
             ((TextView) findViewById(R.id.tSimOperator)).setText(mSimOperator);
+            Log.v(LOG_TAG, "mSimOperator=" + mSimOperator);
 
             String mMcc = tMgr.getSimOperator().substring(0, 3) + " - " + tMgr.getNetworkCountryIso(); //
+            Log.v(LOG_TAG, "mMcc=" + mMcc);
             ((TextView) findViewById(R.id.tMcc)).setText(mMcc);
 
             String mMnc = tMgr.getSimOperator().substring(3) + " - " + mNetworkOperatorName; //
+            Log.v(LOG_TAG, "mMnc=" + mMnc);
             ((TextView) findViewById(R.id.tMnc)).setText(mMnc);
 
             ((TextView) findViewById(R.id.tNetworkOperator)).setText(mNetworkOperatorName);
+            Log.v(LOG_TAG, "mNetworkOperatorName=" + mNetworkOperatorName);
 
             int networkType = tMgr.getNetworkType();
-            String mNetworkType = Integer.toString(networkType);
+            Log.v(LOG_TAG, "networkType=" + networkType);
 
-            switch (networkType)
-            {
-                case 7:
-                    mNetworkType += " - 1xRTT";
-                    break;
-                case 4:
-                    mNetworkType += " - CDMA";
-                    break;
-                case 2:
-                    mNetworkType += " - EDGE";
-                    break;
-                case 14:
-                    mNetworkType += " - eHRPD";
-                    break;
-                case 5:
-                    mNetworkType += " - EVDO re;. 0";
-                    break;
-                case 6:
-                    mNetworkType += " - EVDO re;. A";
-                    break;
-                case 12:
-                    mNetworkType += " - EVDO re;. B";
-                    break;
-                case 1:
-                    mNetworkType += " - GPRS";
-                    break;
-                case 8:
-                    mNetworkType += " - HSDPA";
-                    break;
-                case 10:
-                    mNetworkType += " - HSPA";
-                    break;
-                case 15:
-                    mNetworkType += " - HSPA+";
-                    break;
-                case 9:
-                    mNetworkType += " - HSUPA";
-                    break;
-                case 11:
-                    mNetworkType += " - iDen";
-                    break;
-                case 13:
-                    mNetworkType += " - LTE";
-                    break;
-                case 3:
-                    mNetworkType += " - UMTS";
-                    break;
-                case 0:
-                    mNetworkType += " - Unknown";
-                    break;
-            }
-
-            ((TextView) findViewById(R.id.tNetworkType)).setText(mNetworkType);
+            ((TextView) findViewById(R.id.tNetworkType)).setText(getNetworkTypeDescription(networkType));
 
             String phoneNumber = tMgr.getLine1Number();
+            Log.v(LOG_TAG, "phoneNumber=" + phoneNumber);
 
             String mMSISDN;
 
@@ -130,6 +87,62 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private String getNetworkTypeDescription(int networkType){
+        String mNetworkType = "";
+        switch (networkType)
+        {
+            case 7:
+                mNetworkType += " - 1xRTT";
+                break;
+            case 4:
+                mNetworkType += " - CDMA";
+                break;
+            case 2:
+                mNetworkType += " - EDGE";
+                break;
+            case 14:
+                mNetworkType += " - eHRPD";
+                break;
+            case 5:
+                mNetworkType += " - EVDO re;. 0";
+                break;
+            case 6:
+                mNetworkType += " - EVDO re;. A";
+                break;
+            case 12:
+                mNetworkType += " - EVDO re;. B";
+                break;
+            case 1:
+                mNetworkType += " - GPRS";
+                break;
+            case 8:
+                mNetworkType += " - HSDPA";
+                break;
+            case 10:
+                mNetworkType += " - HSPA";
+                break;
+            case 15:
+                mNetworkType += " - HSPA+";
+                break;
+            case 9:
+                mNetworkType += " - HSUPA";
+                break;
+            case 11:
+                mNetworkType += " - iDen";
+                break;
+            case 13:
+                mNetworkType += " - LTE";
+                break;
+            case 3:
+                mNetworkType += " - UMTS";
+                break;
+            case 0:
+                mNetworkType += " - Unknown";
+                break;
+        }
+        return mNetworkType;
     }
 
     @Override
